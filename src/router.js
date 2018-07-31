@@ -8,7 +8,7 @@ const router = (req, res) => {
   } else if (['/favicon.ico', '/css/style.css', '/js/dom.js', '/js/request.js'].includes(endpoint)) {
     logic.serveHome(res, endpoint);
   } else {
-    logic.serverNotFound(res);
+    logic.pageNotFound(res);
   }
 };
 

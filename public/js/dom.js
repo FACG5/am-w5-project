@@ -1,35 +1,56 @@
 const field = select('#field');
 const submit = select('#submit');
-const mainDiv = select('.main')
-
+const mainDiv = select('.main');
+const result = create('div');
 submit.addEventListener('click', (e) => {
-  mainDiv.textContent = '';
+  result.textContent = '';
+  result.classList = 'result';
+  mainDiv.appendChild(result);
+
+
   e.preventDefault();
   const fieldValue = field.value;
-  if(fieldValue.trim() === '') {
+  if (fieldValue.trim() === '') {
     alert('The text filed is empty');
     return;
-  } 
+  }
   fetch('/weather', fieldValue, (res) => {
-    if(res.cod === '404') {
-      mainDiv.textContent = res.message;
+
+    const div1 = create('div');
+    div1.classList = 'box1';
+    result.appendChild(div1);
+
+    
+    if (res.cod === '404') {
+      div1.textContent = res.message;
       return;
     }
+
+
+    
+
+
     const heading = create('h3');
-    heading.setAttribute('class', 'temlLabel');
     heading.textContent = 'The tempreture : ';
-    mainDiv.appendChild(heading);
+    div1.appendChild(heading);
+
+
     const temp = create('span');
     temp.textContent = Math.round(res.main.temp - 273.15);
-    mainDiv.appendChild(temp);
+    div1.appendChild(temp);
+
+    const div2 = create('div');
+    div2.classList = 'box2';
+    result.appendChild(div2);
+
+
     const heading2 = create('h3');
-    heading2.setAttribute('class', 'temlLabel');
     heading2.textContent = 'Description';
-    mainDiv.appendChild(heading2);
+    div2.appendChild(heading2);
+
+
     const desc = create('span');
     desc.textContent = res.weather[0].description;
-    mainDiv.appendChild(desc);
-  })
-  
+    div2.appendChild(desc);
+  });
 });
-

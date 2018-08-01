@@ -16,45 +16,42 @@ const serveHome = (res, endpoint) => {
   res.writeHead(200, { 'content-type': `${contentType[ext]}` });
   fs.readFile(filePath, (err, file) => {
     if (err) {
-      console.error(err);
+      res.end(err);
     } else {
       res.end(file);
     }
   });
 };
 
-const serveAPI = (req, res) => {
-  let city = ''
-  req.on('data', (data) => {
-    city += data;
-    req.on("end", () => {
-      const url = `http://api.openweathermap.org/data/2.5/weather?q=${city}&APPID=4638dc94ad7887e67dc768fd6a6c909c`;
-
-      getData(url, (err, data) => {
-        if (err) {
-          res.writeHead(404);
-          res.end(err.message)
-        }
-        else {
-
-          res.end(JSON.stringify(data))
-        }
-      })
-    })
-  })
-
-};
 
 const getData = (url, cb) => {
   request.get(url, (err, data) => {
     if (err) {
-      cb(new TypeError("page not found"))
+      cb(new TypeError('page not found'));
     } else {
-      cb(null, data)
+      cb(null,JSON.parse (data.body));
     }
   });
-}
+};
 
+const serveAPI = (req, res) => {
+  let city = '';
+  req.on('data', (data) => {
+    city += data;
+    req.on('end', () => {
+      const url = `http://api.openweathermap.org/data/2.5/weather?q=${city}&APPID=4638dc94ad7887e67dc768fd6a6c909c`;
+
+      getData(url, (err, data1) => {
+        if (err) {
+          res.writeHead(404);
+          res.end(err.message);
+        } else {
+          res.end(JSON.stringify(data1));
+        }
+      });
+    });
+  });
+};
 
 
 const pageNotFound = (res) => {

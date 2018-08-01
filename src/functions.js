@@ -29,7 +29,7 @@ const getData = (url, cb) => {
     if (err) {
       cb(new TypeError('page not found'));
     } else {
-      cb(null,JSON.parse (data.body));
+      cb(null, JSON.parse(data.body));
     }
   });
 };

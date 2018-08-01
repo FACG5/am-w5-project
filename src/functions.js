@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-// const request = require('request');
+const request = require('request');
 
 const contentType = {
   html: 'text/html',
@@ -23,17 +23,38 @@ const serveHome = (res, endpoint) => {
   });
 };
 
-// const serveAPI = (res, search) => {
-//   const url = `http://api.openweathermap.org/data/2.5/weather?q=${search}&APPID=4638dc94ad7887e67dc768fd6a6c909c`;
-//   request.get(url, (err, data) => {
-//     if (err) {
-//       console.error(err);
-//     } else {
-//       res.writeHead(200, { 'Content-Type': 'text/plain' });
-//       res.end(data);
-//     }
-//   });
-// };
+const serveAPI = (req, res) => {
+  let city = ''
+  req.on('data', (data) => {
+    city += data;
+    req.on("end", () => {
+      const url = `http://api.openweathermap.org/data/2.5/weather?q=${city}&APPID=4638dc94ad7887e67dc768fd6a6c909c`;
+
+      getData(url, (err, data) => {
+        if (err) {
+          res.writeHead(404);
+          res.end(err.message)
+        }
+        else {
+
+          res.end(JSON.stringify(data))
+        }
+      })
+    })
+  })
+
+};
+
+const getData = (url, cb) => {
+  request.get(url, (err, data) => {
+    if (err) {
+      cb(new TypeError("page not found"))
+    } else {
+      cb(null, data)
+    }
+  });
+}
+
 
 
 const pageNotFound = (res) => {
@@ -41,4 +62,4 @@ const pageNotFound = (res) => {
   res.end('<h1>404 Error hahahaha</h1>');
 };
 
-module.exports = { serveHome, pageNotFound };
+module.exports = { serveHome, pageNotFound, serveAPI };

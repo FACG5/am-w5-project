@@ -68,7 +68,7 @@ test('Initialise', (t) => {
   test('Test of the text of failed route', (t) => {
     supertest(router)
       .get('/')
-      .expect('Content-Type', /html/)
+      // .expect('Content-Type', /html/)
       .end((err, res) => {
         t.error(err);
         t.equal(res.header['content-type'], 'text/html', 'Should return html');

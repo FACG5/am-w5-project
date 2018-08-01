@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Just for test</title>
+    <title>A-M weather</title>
     <link rel="stylesheet" href="css/style.css">
     <link href="https://fonts.googleapis.com/css?family=Cairo" rel="stylesheet">
 </head>
@@ -13,9 +13,16 @@
 
 
     <div class="main">
-            <input type="text" id="field" placeholder="Enter name of the city here like gaza,ps">
-            <input type="submit" value="Click here" id="submit">
+        <div class="overlay">
+                <h1><span>AM </span>weather</h1>
+                <h2>Type any city you want</h2>
+                <input type="text" id="field" placeholder="Enter name of the city here like gaza,ps" aria-label="Search">
+                <input type="submit" value="Search" id="submit" aria-label="submit">
+                <div class="result"></div>
+        </div>
+        
     </div>
+    
 
     <script src="js/fetch.js"></script>
     <script src="js/logic.js"></script>

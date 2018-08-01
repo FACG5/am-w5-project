@@ -15,19 +15,13 @@ submit.addEventListener('click', (e) => {
     return;
   }
   fetch('/weather', fieldValue, (res) => {
-
     const div1 = create('div');
     div1.classList = 'box1';
     result.appendChild(div1);
-
-    
     if (res.cod === '404') {
       div1.textContent = res.message;
       return;
     }
-
-
-    
 
 
     const heading = create('h3');

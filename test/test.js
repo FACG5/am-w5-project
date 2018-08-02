@@ -3,12 +3,6 @@ const supertest = require('supertest');
 const fs = require('fs');
 const router = require('../src/router');
 
-test('Initialise', (t) => {
-  const num = 2;
-  t.equal(num, 2, 'Should return 2');
-  t.end();
-});
-
 
 test('Test for the statuscode of the home page', (t) => {
   supertest(router)

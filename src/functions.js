@@ -41,12 +41,12 @@ const serveAPI = (req, res) => {
     req.on('end', () => {
       const url = `http://api.openweathermap.org/data/2.5/weather?q=${city}&APPID=4638dc94ad7887e67dc768fd6a6c909c`;
 
-      getData(url, (err, data1) => {
+      getData(url, (err, weatherData) => {
         if (err) {
           res.writeHead(404);
           res.end(err.message);
         } else {
-          res.end(JSON.stringify(data1));
+          res.end(JSON.stringify(weatherData));
         }
       });
     });
